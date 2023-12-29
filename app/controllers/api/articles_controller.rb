@@ -1,6 +1,7 @@
 class Api::ArticlesController < ApplicationController
 
   before_action :authenticate
+  before_action :set_article, only: %i[show update destroy]
 
   def create
     @article = @current_user.articles.build(article_params.except(:tagList))
@@ -13,12 +14,13 @@ class Api::ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find_by(slug: params[:slug])
     render_article(@article)
   end
   
   def update
-    @article = Article.find_by(slug: params[:slug])
+    unless owner?(@article)
+      render_unauthorized and return
+    end
     if @article.update(article_params)
       render_article(@article)
     else
@@ -27,12 +29,19 @@ class Api::ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find_by(slug: params[:slug]).destroy
+    unless owner?(@article)
+      render_unauthorized and return
+    end
+    @article.destroy
   end
 
   private
   def article_params
     params.require(:article).permit(:title, :description, :body, tagList: [])
+  end
+
+  def set_article
+    @article = Article.find_by(slug: params[:slug])
   end
 
   def render_article(article)
