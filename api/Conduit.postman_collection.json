@@ -354,6 +354,36 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Delete Article",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{APIURL}}/articles/{{slug}}",
+              "host": ["{{APIURL}}"],
+              "path": ["articles", "{{slug}}"]
+            }
+          },
+          "response": []
         }
         
       ],

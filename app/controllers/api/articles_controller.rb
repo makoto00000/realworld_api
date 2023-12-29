@@ -26,6 +26,10 @@ class Api::ArticlesController < ApplicationController
     end
   end
 
+  def destroy
+    @article = Article.find_by(slug: params[:slug]).destroy
+  end
+
   private
   def article_params
     params.require(:article).permit(:title, :description, :body, tagList: [])
