@@ -1,5 +1,6 @@
 class Article < ApplicationRecord
   before_save :generate_slug
+  before_update :generate_slug
 
   belongs_to :user
   has_many :article_tags, dependent: :destroy
