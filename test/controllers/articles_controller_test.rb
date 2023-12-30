@@ -90,4 +90,45 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
+  # test for favorite
+  test "should not favorite article not logged in user" do
+    post "/api/articles/#{@article.slug}/favorite"
+    assert_response :unauthorized
+  end
+  
+  test "should favorite article logged in user" do
+    assert_difference '@article.users.count', 1 do
+      post "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@token}" }
+      assert_response :ok
+    end
+  end
+  
+  test "should favorite article logged in other user" do
+    assert_difference '@article.users.count', 1 do
+      post "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@other_token}" }
+      assert_response :ok
+    end
+  end
+  
+  test "should not unfavorite article not logged in user" do
+    delete "/api/articles/#{@article.slug}/favorite"
+    assert_response :unauthorized
+  end
+  
+  test "should unfavorite article logged in user" do
+    post "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@token}" }
+    assert_difference '@article.users.count', -1 do
+      delete "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@token}" }
+      assert_response :ok
+    end
+  end
+  
+  test "should unfavorite article logged in other user" do
+    post "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@other_token}" }
+    assert_difference '@article.users.count', -1 do
+      delete "/api/articles/#{@article.slug}/favorite", headers: { 'Authorization' => "Bearer #{@other_token}" }
+      assert_response :ok
+    end
+  end
+
 end
