@@ -1,7 +1,7 @@
 class Api::ArticlesController < ApplicationController
 
   before_action :authenticate
-  before_action :set_article, only: %i[show update destroy]
+  before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
   def create
     @article = @current_user.articles.build(article_params.except(:tagList))
@@ -35,6 +35,16 @@ class Api::ArticlesController < ApplicationController
     @article.destroy
   end
 
+  def favorite
+    @article.favorite @current_user
+    render_article(@article)
+  end
+
+  def unfavorite
+    @article.unfavorite @current_user
+    render_article(@article)
+  end
+
   private
   def article_params
     params.require(:article).permit(:title, :description, :body, tagList: [])
@@ -45,6 +55,6 @@ class Api::ArticlesController < ApplicationController
   end
 
   def render_article(article)
-    render json: {article: {slug: article.slug, title: article.title, description: article.description, body: article.body, tagList: article.tags.pluck(:name), createdAt: article.created_at, updatedAt: article.updated_at, favorited: true, favoritesCount: 0, author: article.user.attributes.slice("username", "bio", "image").merge({following: true})}}
+    render json: {article: {slug: article.slug, title: article.title, description: article.description, body: article.body, tagList: article.tags.pluck(:name), createdAt: article.created_at, updatedAt: article.updated_at, favorited: article.users.include?(@current_user), favoritesCount: article.users.count, author: article.user.attributes.slice("username", "bio", "image").merge({following: true})}}
   end
 end
