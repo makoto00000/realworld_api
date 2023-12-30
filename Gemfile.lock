@@ -75,6 +75,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    ansi (1.5.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.5)
@@ -111,6 +112,11 @@ GEM
     marcel (1.0.2)
     mini_mime (1.1.5)
     minitest (5.20.0)
+    minitest-reporters (1.6.1)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     msgpack (1.7.2)
     mutex_m (0.2.0)
     mysql2 (0.5.5)
@@ -177,6 +183,7 @@ GEM
       psych (>= 4.0.0)
     reline (0.4.1)
       io-console (~> 0.5)
+    ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     stringio (3.1.0)
     thor (1.3.0)
@@ -198,6 +205,8 @@ DEPENDENCIES
   bootsnap
   debug
   jwt
+  minitest
+  minitest-reporters
   mysql2 (~> 0.5)
   puma (>= 5.0)
   rack-cors

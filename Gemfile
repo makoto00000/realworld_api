@@ -12,6 +12,10 @@ gem "bcrypt", "~> 3.1.7"
 
 gem "jwt"
 
+gem 'minitest'
+
+gem 'minitest-reporters'
+
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 gem "bootsnap", require: false
