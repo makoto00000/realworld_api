@@ -1,6 +1,8 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "minitest/reporters"
+Minitest::Reporters.use!
 
 module ActiveSupport
   class TestCase
@@ -11,5 +13,11 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    def create_token(user_id)
+      payload = {user_id: user_id}
+      secret_key = Rails.application.credentials.secret_key_base
+      token = JWT.encode(payload, secret_key)
+      return token
+    end
   end
 end

@@ -1,7 +1,8 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+html:
+  name: html
 
-one:
-  name: MyString
+css:
+  name: css
 
-two:
-  name: MyString
+javascript:
+  name: JavaScript
