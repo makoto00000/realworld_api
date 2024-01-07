@@ -8,6 +8,7 @@ class Article < ApplicationRecord
   has_and_belongs_to_many :users
 
   def sync_tags(tag_list)
+    self.tags = []
     tag_list.each do |tag_name|
       tag = Tag.find_or_create_by(name: tag_name)
       tags << tag
@@ -20,6 +21,10 @@ class Article < ApplicationRecord
 
   def unfavorite(user)
     users.delete user
+  end
+
+  def as_json(options = {})
+    super(options.merge(include: :user))
   end
 
   private

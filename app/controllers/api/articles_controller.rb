@@ -1,6 +1,6 @@
 class Api::ArticlesController < ApplicationController
 
-  before_action :authenticate
+  before_action :authenticate, only: %i[create update destroy favorite unfavorite]
   before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
   def create
@@ -21,7 +21,8 @@ class Api::ArticlesController < ApplicationController
     unless owner?(@article)
       render_unauthorized and return
     end
-    if @article.update(article_params)
+    if @article.update(article_params.except(:tagList))
+      @article.sync_tags(article_params[:tagList])
       render_article(@article)
     else
       render json: @article.errors, status: :unprocessable_entity
