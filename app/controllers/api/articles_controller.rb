@@ -4,8 +4,9 @@ class Api::ArticlesController < ApplicationController
   before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
   def index
-    @articles = Article.order(created_at: :desc)
-    render json: {articles: @articles, article_count: @articles.count}
+    @articles = Article.order(created_at: :desc).includes(:user)
+    @articles = @articles.offset(params[:offset]).limit(params[:limit]) if params[:offset].present? and params[:limit].present?
+    render json: {articles: @articles, article_count: Article.all.count}, :include => :user
   end
 
   def create
