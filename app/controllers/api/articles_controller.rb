@@ -3,6 +3,11 @@ class Api::ArticlesController < ApplicationController
   before_action :authenticate, only: %i[create update destroy favorite unfavorite]
   before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
+  def index
+    @articles = Article.order(created_at: :desc)
+    render json: {articles: @articles, article_count: @articles.count}
+  end
+
   def create
     @article = @current_user.articles.build(article_params.except(:tagList))
     if @article.save
