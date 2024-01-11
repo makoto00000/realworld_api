@@ -9,7 +9,7 @@ class Api::ArticlesController < ApplicationController
       @article.sync_tags(article_params[:tagList])
       render_article(@article)
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: {errors: {body: @article.errors}}, status: :unprocessable_entity
     end
   end
 

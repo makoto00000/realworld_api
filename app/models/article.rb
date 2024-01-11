@@ -7,6 +7,8 @@ class Article < ApplicationRecord
   has_many :tags, through: :article_tags
   has_and_belongs_to_many :users
 
+  validates :title, presence: true
+
   def sync_tags(tag_list)
     self.tags = []
     tag_list.each do |tag_name|
@@ -30,6 +32,6 @@ class Article < ApplicationRecord
   private
 
   def generate_slug
-    self.slug = title.parameterize
+    self.slug = "#{title.strip.downcase.gsub(" ", "-").gsub(".", "")}-#{rand(999999)}"
   end
 end
