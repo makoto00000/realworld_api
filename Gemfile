@@ -22,6 +22,8 @@ gem "bootsnap", require: false
 
 gem "rack-cors"
 
+gem "faker"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
 end
