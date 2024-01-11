@@ -17,4 +17,8 @@ class User < ApplicationRecord
     email.downcase!
   end
 
+  def setDefaultImage
+    self.image = "https://loremflickr.com/300/300"
+  end
+
 end
