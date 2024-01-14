@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  before_save :downcase_email
+  before_save :downcase_email, :set_default_image
 
   has_many :articles
   has_secure_password
@@ -17,7 +17,7 @@ class User < ApplicationRecord
     email.downcase!
   end
 
-  def setDefaultImage
+  def set_default_image
     self.image = "https://loremflickr.com/300/300"
   end
 

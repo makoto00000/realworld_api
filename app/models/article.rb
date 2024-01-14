@@ -25,10 +25,6 @@ class Article < ApplicationRecord
     users.delete user
   end
 
-  def as_json(options = {})
-    super(options.merge(include: :user))
-  end
-
   private
 
   def generate_slug
