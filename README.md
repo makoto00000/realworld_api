@@ -1,24 +1,16 @@
-# README
+# RealWorld API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[conduit](https://demo.realworld.io/#/)のクローンサイトです。
 
-Things you may want to cover:
+フロントは以下のリポジトリです。
 
-* Ruby version
+[Conduit](https://github.com/makoto00000/realworld_nextjs)
 
-* System dependencies
+## 起動方法
 
-* Configuration
+```shell
+rails s
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+上記のコマンドで起動し、[https://localhost:3001]を開いてRailsの画面が開けば成功です。
+（サイトを表示するには、フロント側を起動しておく必要があります。）
