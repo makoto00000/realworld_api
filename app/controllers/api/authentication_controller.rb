@@ -5,7 +5,7 @@ class Api::AuthenticationController < ApplicationController
       token = create_token(@user.id)
       render json: {user: {email: @user.email, token: token, username: @user.username, bio: @user.bio, image: @user.image}}
     else
-      render status: :unauthorized
+      render json: {errors: {body: {message: ["email or password is invalid"]}}}, status: :unauthorized
     end
   end
 end
