@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,58 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_231_230_025_854) do # rubocop:disable Metrics/BlockLength
-  create_table 'article_tags', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.bigint 'article_id', null: false
-    t.bigint 'tag_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['article_id'], name: 'index_article_tags_on_article_id'
-    t.index ['tag_id'], name: 'index_article_tags_on_tag_id'
+ActiveRecord::Schema[7.1].define(version: 2023_12_30_025854) do
+  create_table "article_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_tags_on_article_id"
+    t.index ["tag_id"], name: "index_article_tags_on_tag_id"
   end
 
-  create_table 'articles', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'slug', null: false
-    t.string 'title', null: false
-    t.string 'description'
-    t.text 'body'
-    t.bigint 'user_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['slug'], name: 'index_articles_on_slug', unique: true
-    t.index ['user_id'], name: 'index_articles_on_user_id'
+  create_table "articles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.string "description"
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
+    t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
-  create_table 'articles_users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.bigint 'article_id', null: false
-    t.bigint 'user_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['article_id'], name: 'index_articles_users_on_article_id'
-    t.index ['user_id'], name: 'index_articles_users_on_user_id'
+  create_table "articles_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_articles_users_on_article_id"
+    t.index ["user_id"], name: "index_articles_users_on_user_id"
   end
 
-  create_table 'tags', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'username', null: false
-    t.string 'email', null: false
-    t.string 'password_digest', null: false
-    t.string 'token'
-    t.text 'bio', default: ''
-    t.string 'image'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[username email], name: 'index_users_on_username_and_email', unique: true
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "username", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.string "token"
+    t.string "bio", default: ""
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["username", "email"], name: "index_users_on_username_and_email", unique: true
   end
 
-  add_foreign_key 'article_tags', 'articles'
-  add_foreign_key 'article_tags', 'tags'
-  add_foreign_key 'articles', 'users'
-  add_foreign_key 'articles_users', 'articles'
-  add_foreign_key 'articles_users', 'users'
+  add_foreign_key "article_tags", "articles"
+  add_foreign_key "article_tags", "tags"
+  add_foreign_key "articles", "users"
+  add_foreign_key "articles_users", "articles"
+  add_foreign_key "articles_users", "users"
 end
