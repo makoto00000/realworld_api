@@ -20,5 +20,3 @@ stdout_redirect File.expand_path('log/puma_access.log'), File.expand_path('log/p
 workers 2
 
 plugin :tmp_restart
-
-daemonize
