@@ -30,7 +30,7 @@ end
       user.articles.build(
         title: Faker::Lorem.sentence,
         description: Faker::Lorem.sentence,
-        body: Faker::Lorem.paragraph(sentence_count: 10),
+        body: Faker::Lorem.paragraph(sentence_count: 10)
       ) do |article|
         article.save!
         # article.tags << Tag.offset(rand(Tag.count)).first

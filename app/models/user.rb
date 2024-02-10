@@ -1,4 +1,6 @@
-class User < ApplicationRecord
+# frozen_string_literal: true
+
+class User < ApplicationRecord # rubocop:disable Style/Documentation
   before_save :downcase_email, :set_default_image
 
   has_many :articles
@@ -6,10 +8,10 @@ class User < ApplicationRecord
 
   validates :username, presence: true, length: { maximum: 50 }
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
 
-  validates :password, presence: true,  length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }
 
   private
 
@@ -18,7 +20,6 @@ class User < ApplicationRecord
   end
 
   def set_default_image
-    self.image = "https://loremflickr.com/300/300"
+    self.image = 'https://loremflickr.com/300/300'
   end
-
 end

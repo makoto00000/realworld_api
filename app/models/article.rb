@@ -1,4 +1,6 @@
-class Article < ApplicationRecord
+# frozen_string_literal: true
+
+class Article < ApplicationRecord # rubocop:disable Style/Documentation
   before_save :generate_slug
   before_update :generate_slug
 
@@ -28,6 +30,6 @@ class Article < ApplicationRecord
   private
 
   def generate_slug
-    self.slug = "#{title.strip.downcase.gsub(" ", "-").gsub(".", "")}-#{rand(999999)}"
+    self.slug = "#{title.strip.downcase.gsub(' ', '-').gsub('.', '')}-#{rand(999_999)}"
   end
 end
