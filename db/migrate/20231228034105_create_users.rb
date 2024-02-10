@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[7.1] # rubocop:disable Style/Documen
       t.string :email, null: false
       t.string :password_digest, null: false
       t.string :token
-      t.text :bio, default: ''
+      t.string :bio, default: ''
       t.string :image
 
       t.timestamps
