@@ -12,9 +12,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable
   end
 
   # test for show
-  test 'should not get article not logged in user' do
+  test 'should get article not logged in user' do
     get api_article_path(@article.slug)
-    assert_response :unauthorized
+    assert_response :ok
   end
 
   test 'should get article logged in user' do
@@ -61,7 +61,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable
     put api_article_path(@article.slug), headers: { 'Authorization' => "Bearer #{@token}" },
                                          params: { article: { title: 'Test Article Update',
                                                               description: 'test description updated',
-                                                              body: 'test body updated' } }
+                                                              body: 'test body updated',
+                                                              tagList: %w[tag1 tag2 tag3] } }
     assert_response :ok
     article = controller.instance_variable_get('@article')
     get api_article_path(article.slug), headers: { 'Authorization' => "Bearer #{@token}" }
@@ -72,7 +73,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable
     put api_article_path(@article.slug), headers: { 'Authorization' => "Bearer #{@other_token}" },
                                          params: { article: { title: 'Test Article Update',
                                                               description: 'test description updated',
-                                                              body: 'test body updated' } }
+                                                              body: 'test body updated',
+                                                              tagList: %w[tag1 tag2 tag3] } }
     assert_response :unauthorized
   end
 
