@@ -12,6 +12,9 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
+  host: <%= ENV["REALWORLD_API_DATABASE_HOST"] %>
+  username: <%= ENV["REALWORLD_API_DATABASE_USERNAME"] %>
+  password: <%= ENV["REALWORLD_API_DATABASE_PASSWORD"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -48,6 +51,3 @@ test:
 production:
   <<: *default
   database: realworld_api_production
-  host: <%= ENV["REALWORLD_API_DATABASE_HOST"] %>
-  username: <%= ENV["REALWORLD_API_DATABASE_USERNAME"] %>
-  password: <%= ENV["REALWORLD_API_DATABASE_PASSWORD"] %>
