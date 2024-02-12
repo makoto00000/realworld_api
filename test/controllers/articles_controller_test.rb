@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class ArticlesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable Metrics/ClassLength
+class ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @other_user = users(:archer)
@@ -64,7 +64,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest # rubocop:disable
                                                               body: 'test body updated',
                                                               tagList: %w[tag1 tag2 tag3] } }
     assert_response :ok
-    article = controller.instance_variable_get('@article')
+    article = controller.instance_variable_get(:@article)
     get api_article_path(article.slug), headers: { 'Authorization' => "Bearer #{@token}" }
     assert_response :ok
   end

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class Article < ApplicationRecord # rubocop:disable Style/Documentation
+class Article < ApplicationRecord
   before_save :generate_slug
   before_update :generate_slug
 
   belongs_to :user
   has_many :article_tags, dependent: :destroy
   has_many :tags, through: :article_tags
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :users # rubocop:disable Rails/HasAndBelongsToMany
 
   validates :title, presence: true
 
@@ -30,6 +30,6 @@ class Article < ApplicationRecord # rubocop:disable Style/Documentation
   private
 
   def generate_slug
-    self.slug = "#{title.strip.downcase.gsub(' ', '-').gsub('.', '')}-#{rand(999_999)}"
+    self.slug = "#{title.strip.downcase.tr(' ', '-').delete('.')}-#{rand(999_999)}"
   end
 end

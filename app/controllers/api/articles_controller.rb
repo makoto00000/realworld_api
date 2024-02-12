@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 module Api
-  class ArticlesController < ApplicationController # rubocop:disable Style/Documentation
+  class ArticlesController < ApplicationController
     before_action :authenticate, only: %i[create update destroy favorite unfavorite]
     before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
-    def index # rubocop:disable Metrics/AbcSize
+    def index
       @articles = Article.order(created_at: :desc).includes(:user)
-      if params[:offset].present? && params[:limit].present?
-        @articles = @articles.offset(params[:offset]).limit(params[:limit])
-      end
-      render json: { articles: @articles, article_count: Article.all.count }, include: :user
+      @articles = @articles.offset(params[:offset]).limit(params[:limit]) if params[:offset].present? && params[:limit].present?
+      render json: { articles: @articles, article_count: Article.count }, include: :user
     end
 
+    def show
+      render_article(@article)
+    end
     def create
       @article = @current_user.articles.build(article_params.except(:tagList))
       if @article.save
@@ -23,9 +24,6 @@ module Api
       end
     end
 
-    def show
-      render_article(@article)
-    end
 
     def update
       render_unauthorized and return unless owner?(@article)

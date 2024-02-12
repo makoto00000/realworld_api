@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Api
-  class UsersController < ApplicationController # rubocop:disable Style/Documentation
+  class UsersController < ApplicationController
     before_action :authenticate, only: %i[current_user update]
 
     def create
       @user = User.new(user_params)
       if @user.save
         token = create_token(@user.id)
-        render json: { user: { email: @user.email, token:, username: @user.username, bio: @user.bio, image: @user.image } }, # rubocop:disable Layout/LineLength
+        render json: { user: { email: @user.email, token:, username: @user.username, bio: @user.bio, image: @user.image } },
                status: :created
       else
         render json: { errors: { body: @user.errors } }, status: :unprocessable_entity

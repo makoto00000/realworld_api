@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class TagsController < ApplicationController # rubocop:disable Style/Documentation
+  class TagsController < ApplicationController
     def index
       @tags = Tag.all
       if @tags
