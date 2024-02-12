@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ArticleTag < ApplicationRecord # rubocop:disable Style/Documentation
+class ArticleTag < ApplicationRecord
   belongs_to :article
   belongs_to :tag
 end
