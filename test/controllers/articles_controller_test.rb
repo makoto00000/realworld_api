@@ -19,10 +19,14 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get article logged in user' do
     get api_article_path(@article.slug), headers: { 'Authorization' => "Bearer #{@token}" }
+
     p @user
     p @other_user
     puts @token
     puts @other_token
+    puts @user.password_digest
+    puts create_token(@user.id)
+
     assert_response :ok
   end
 
