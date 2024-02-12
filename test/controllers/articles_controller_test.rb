@@ -28,13 +28,11 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     puts create_token(@user.id)
     puts BCrypt::Password.create('password')
 
-    def create_token2(user_id)
-      payload = { user_id: }
-      secret_key = Rails.application.credentials.secret_key_base
-      JWT.encode(payload, secret_key)
-    end
-    puts create_token2(@user.id)
-
+    payload = { user_id: @user.id }
+    secret_key = Rails.application.credentials.secret_key_base
+    puts payload
+    puts secret_key
+    puts JWT.encode(payload, secret_key)
     assert_response :ok
   end
 
