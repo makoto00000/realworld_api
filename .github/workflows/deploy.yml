@@ -1,0 +1,69 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Rubocop
+        run: bundle exec rubocop
+      
+      - name: minitest
+        run: bundle exec rails test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy in Amazon EC2 Main
+        env:
+          PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+          HOSTNAME : ${{ secrets.HOSTNAME  }}
+          USER_NAME : ${{ secrets.USER_NAME  }}
+
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+            cd /home/ec2-user/var/www/rails/realworld_api &&
+            git fetch --all &&
+            git reset --hard origin/main &&
+            bundle install &&
+            bundle exec rails db:migrate RAILS_ENV=production &&
+            if [[ -e tmp/pids/puma.pid ]];then kill $(cat tmp/pids/puma.pid); echo kill puma process;fi &&
+            screen -dm bundle exec rails s -e production
+            '
+
+      - name: Deploy in Amazon EC2 Sub
+        env:
+          PRIVATE_KEY_SUB: ${{ secrets.AWS_PRIVATE_KEY_SUB  }}
+          HOSTNAME_SUB : ${{ secrets.HOSTNAME_SUB  }}
+          USER_NAME_SUB : ${{ secrets.USER_NAME_SUB  }}
+
+        run: |
+          echo "$PRIVATE_KEY_SUB" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME_SUB}@${HOSTNAME_SUB} '
+            cd /home/ec2-user/var/www/rails/realworld_api &&
+            git fetch --all &&
+            git reset --hard origin/main &&
+            bundle install &&
+            bundle exec rails db:migrate RAILS_ENV=production &&
+            if [[ -e tmp/pids/puma.pid ]];then kill $(cat tmp/pids/puma.pid); echo kill puma process;fi &&
+            screen -dm bundle exec rails s -e production
+            '
