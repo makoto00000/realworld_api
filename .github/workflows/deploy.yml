@@ -31,7 +31,6 @@ jobs:
       - name: Setup Database
         env:
           RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY  }}
         run: |
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create
@@ -41,6 +40,8 @@ jobs:
         run: bundle exec rubocop
       
       - name: minitest
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY  }}
         run: bundle exec rails test
 
   deploy:
