@@ -60,7 +60,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            cd /home/ec2-user/var/www/rails/realworld_api &&
+            cd /var/www/rails/realworld_api &&
             git fetch --all &&
             git reset --hard origin/main &&
             bundle install &&
@@ -78,7 +78,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY_SUB" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME_SUB}@${HOSTNAME_SUB} '
-            cd /home/ec2-user/var/www/rails/realworld_api &&
+            cd /var/www/rails/realworld_api &&
             git fetch --all &&
             git reset --hard origin/main &&
             bundle install &&

@@ -19,20 +19,6 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get article logged in user' do
     get api_article_path(@article.slug), headers: { 'Authorization' => "Bearer #{@token}" }
-
-    p @user
-    p @other_user
-    puts @token
-    puts @other_token
-    puts @user.password_digest
-    puts create_token(@user.id)
-    puts BCrypt::Password.create('password')
-
-    payload = { user_id: @user.id }
-    secret_key = Rails.application.credentials.secret_key_base
-    puts payload
-    puts secret_key
-    puts JWT.encode(payload, secret_key)
     assert_response :ok
   end
 
