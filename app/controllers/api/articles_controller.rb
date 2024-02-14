@@ -6,9 +6,9 @@ module Api
     before_action :set_article, only: %i[show update destroy favorite unfavorite]
 
     def index
-      @articles = Article.order(created_at: :desc).includes(:user)
+      @articles = Article.order(created_at: :desc).includes([:user, :tags])
       @articles = @articles.offset(params[:offset]).limit(params[:limit]) if params[:offset].present? && params[:limit].present?
-      render json: { articles: @articles, article_count: Article.count }, include: :user
+      render json: { articles: @articles, article_count: Article.count }, include: [:user, :tags]
     end
 
     def show
